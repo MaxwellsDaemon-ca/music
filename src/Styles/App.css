@@ -1,0 +1,36 @@
+/* Basic reset */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+}
+
+/* Container to hold the cards */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 20px; /* space between the cards */
+}
+
+/* Styling the card */
+.card {
+  width: 18rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 15px;
+}
