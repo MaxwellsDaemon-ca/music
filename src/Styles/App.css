@@ -3,11 +3,14 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   background-color: #f8f9fa;
+}
+
+.container {
+  padding: 10px;
 }
 
 /* Flexbox container */
@@ -43,4 +46,8 @@ body, html {
 .card-title {
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.navbar-brand {
+  padding-left: 20px;
 }
