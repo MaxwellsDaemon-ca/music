@@ -1,55 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import SearchForm from "./SearchForm";
 import "../Styles/App.css";
+// import albums from "../Data/albums.json";
+import dataSource from "../Data/dataSource";
 
-const App = () => {
-  const [albumList, setAlbumList] = useState([
-    {
-      artistID: 0,
-      artist: "Sleep Token",
-      title: "Take Me Back To Eden",
-      description:
-        "Soaring choruses and moody verses circle one another as the curtain rises on 'Take Me Back To Eden'. It's steady, marching, menacing, painting a prologue of Vessel admitting he feels truly helpless at the hand of his lover, a figure often represented through the lore of the band as an ancient deity known as Sleep.",
-      year: 2023,
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/4/48/SleepTokenTMBTE.jpg",
-    },
-    {
-      artistID: 1,
-      artist: "Creed",
-      title: "Weathered",
-      description:
-        "Creed's Weathered album is described as a mix of the band's heaviest and most aggressive songs, experimental tracks, and popular ballads. The album's lyrics cover a range of topics, including Christianity, discrimination, depression, loneliness, and the band's own experiences with the pressures of fame.",
-      year: 2001,
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/a/a2/Weathered_Main_Cover.jpg",
-    },
-    {
-      artistID: 2,
-      artist: "Eagles",
-      title: "Long Road out of Eden",
-      description:
-        "Long Road out of Eden is the Eagles' seventh studio album. This double album blends the band's signature harmonies and rock sound with more contemporary themes, touching on politics, environmentalism, and reflections on modern society.",
-      year: 2007,
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/4/46/EaglesLongRoadOutOfEden.jpg",
-    },
-  ]);
+const App = (props) => {
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [albumList, setAlbumList] = useState([]);
+
+  let refresh = false;
+
+  const updateSearchResults = (phrase) => {
+    console.log("phrase is: " + phrase);
+    setSearchPhrase(phrase);
+  };
+
+  useEffect(() => {
+    loadAlbums();
+  }, [refresh]);
+
+  const loadAlbums = async () => {
+    const response = await dataSource.get("/albums");
+    const shuffledAlbums = shuffleArray(response.data);
+    setAlbumList(shuffledAlbums);
+  };
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
 
   const renderedList = () => {
     return albumList.map((album) => {
-      return (
-        <Card
-        albumTitle={album.title}
-        albumDescription={album.description}
-        buttonText="OK"
-        imgURL={album.image}
-        />
-      )
-    })
-  }
+      if (
+        album.description.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+        album.title.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+        searchPhrase === ""
+      ) {
+        return (
+          <Card
+            key={album.albumId}
+            albumTitle={album.title}
+            albumDescription={album.description}
+            buttonText="OK"
+            imgURL={album.image}
+          />
+        );
+      } else {
+        console.log("Does not match " + searchPhrase);
+        return null;
+      }
+    });
+  };
 
-  return <div className="card-container">{renderedList()}</div>
+  return (
+    <div>
+      <div className="container">
+        <SearchForm onSubmit={updateSearchResults} />
+      </div>
+      <div className="card-container">{renderedList()}</div>
+    </div>
+  );
 };
 
 export default App;
