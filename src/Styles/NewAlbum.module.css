@@ -1,0 +1,111 @@
+.newAlbumContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.albumForm {
+  grid-column: 1 / 2;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.trackFormContainer {
+  grid-column: 2 / 3;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.trackListContainer {
+  grid-column: 1 / 3;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.feedbackMessage {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.albumForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formGroupLabel {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.formGroupInput,
+.formGroupTextarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.formGrouptextarea {
+  min-height: 100px; /* Provide a better height for description text area */
+}
+
+.feedbackMessage {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.submitButtonContainer {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+.submitButton,
+.cancelButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancelButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.submitButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #d32f2f;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}

@@ -5,22 +5,22 @@ import { useNavigate } from "react-router-dom";
 const AlbumList = (props) => {
   console.log("props albumList", props);
   const navigator = useNavigate();
-  
-  const handleSelectionOne = (albumID) => {
-    console.log("Selected ID is ", albumID);
-    props.onClick(albumID, navigator);
+
+  const handleSelectionOne = (albumId, uri) => {
+    console.log("Selected ID is ", albumId);
+    props.onClick(albumId, navigator, uri);
   };
 
   const albums = props.albumList.map((album) => {
     return (
       <Card
         key={album.albumId}
-        albumID={album.albumId}
+        albumId={album.albumId}
         albumTitle={album.title}
         albumDescription={album.description}
         buttonText="OK"
         imgURL={album.image}
-        onClick={() => handleSelectionOne(album.albumId)}
+        onClick={handleSelectionOne}
       />
     );
   });

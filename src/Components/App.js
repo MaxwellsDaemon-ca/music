@@ -5,9 +5,8 @@ import dataSource from "../Data/dataSource";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SearchAlbum from "./SearchAlbum";
 import NavBar from "./NavBar";
-import NewAlbum from "./NewAlbum";
+import EditAlbum from "./EditAlbum";
 import OneAlbum from "./OneAlbum";
-
 
 const App = (props) => {
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -23,7 +22,7 @@ const App = (props) => {
 
   useEffect(() => {
     loadAlbums();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh]);
 
   const loadAlbums = async () => {
@@ -32,17 +31,18 @@ const App = (props) => {
     setAlbumList(shuffledAlbums);
   };
 
-  const updateSingleAlbum = (id, navigate) => {
-    console.log('update single album =', id);
-    console.log('update single album =', navigate);
+  const updateSingleAlbum = (id, navigate, uri) => {
+    console.log("update single album =", id);
+    console.log("update single album =", navigate);
     var indexNumber = 0;
     for (var i = 0; i < albumList.length; ++i) {
       if (albumList[i].albumId === id) indexNumber = i;
     }
     setCurrentlySelectedAlbumId(indexNumber);
-    console.log('update path', '/show/' + indexNumber);
-    navigate('/show/' + indexNumber);
-  }
+    let path = uri + indexNumber;
+    console.log("path", path);
+    navigate(path);
+  };
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -63,6 +63,11 @@ const App = (props) => {
     return false;
   });
 
+  const onEditAlbum = (navigate) => {
+    loadAlbums();
+    navigate("/");
+  };
+
   return (
     <BrowserRouter>
       <NavBar />
@@ -78,7 +83,21 @@ const App = (props) => {
             />
           }
         />
-        <Route exact path="/new" element={<NewAlbum />} />
+        <Route
+          exact
+          path="/new"
+          element={<EditAlbum onEditAlbum={onEditAlbum} />}
+        />
+        <Route
+          exact
+          path="/edit/:albumId"
+          element={
+            <EditAlbum
+              onEditAlbum={onEditAlbum}
+              album={albumList[currentlySelectedAlbumId]}
+            />
+          }
+        />
         <Route
           exact
           path="/show/:albumId"

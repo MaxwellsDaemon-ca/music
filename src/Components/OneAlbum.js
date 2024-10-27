@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../Styles/OneAlbum.module.css";
+import TracksList from "./TracksList";
+import TrackVideo from "./TrackVideo";
+import TrackLyrics from "./TrackLyrics";
 
 const OneAlbum = (props) => {
+  const [selectedTrack, setSelectedTrack] = useState(null);
+
+  const handleTrackSelect = (track) => {
+    console.log("Selected Track: ", track);
+    setSelectedTrack(track);
+  };
+
   return (
     <div className={styles.container}>
       <h2>Album Details for {props.album.title}</h2>
@@ -16,9 +26,11 @@ const OneAlbum = (props) => {
             <div className={styles.cardBody}>
               <h5 className={styles.cardTitle}>{props.album.title}</h5>
               <p className={styles.cardText}>{props.album.description}</p>
-              <div className={styles.listGroup}>
-                <li>Show the album's tracks here</li>
-              </div>
+              <TracksList
+                tracks={props.album.tracks}
+                onSelect={handleTrackSelect}
+                selectedTrack={selectedTrack}
+              />
               <a href="/#" className={"btn btn-primary " + styles.btnPrimary}>
                 Edit
               </a>
@@ -27,10 +39,10 @@ const OneAlbum = (props) => {
         </div>
         <div className={styles.colsm9}>
           <div className={styles.card}>
-            <p>Show the lyrics of the selected track here</p>
+            <TrackVideo video={selectedTrack ? selectedTrack.video : null} />
           </div>
           <div className={styles.card}>
-            <p>Show the YouTube video of the selected track here</p>
+            <TrackLyrics lyrics={selectedTrack ? selectedTrack.lyrics : null} />
           </div>
         </div>
       </div>
